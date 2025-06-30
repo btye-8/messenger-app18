@@ -27,33 +27,7 @@
     if (!username) {
       window.location.href = "/";
     }
-// this is new
-     // Set current user
-    socket.emit("set-user", username);
 
-    // Determine friend
-    const otherUser = username === "Gini" ? "Dev" : "Gini";
-
-    // Show last seen or online
-    function updateLastSeen() {
-      fetch(`${BACKEND_URL}/last-seen/${otherUser}`)
-        .then(res => res.json())
-        .then(data => {
-          const statusText = data.lastSeen === "online"
-            ? "Online"
-            : `Last seen at ${new Date(data.lastSeen).toLocaleTimeString()}`;
-          document.getElementById("status").innerText = `${otherUser}: ${statusText}`;
-        });
-    }
-
-    setInterval(updateLastSeen, 10000);
-    updateLastSeen();
-    // this is end 
-    fetch('/messages')
-      .then(res => res.json())
-      .then(data => {
-        data.forEach(addMessage);
-      });
 
     function addMessage(msg) {
       const div = document.createElement("div");
