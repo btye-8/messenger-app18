@@ -17,8 +17,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-let messages = [];
-const lastSeen = {};
+
 let users = {
   Gini: "18072007",
   Dev: "18042004"
@@ -38,28 +37,7 @@ app.post('/login', (req, res) => {
     res.send({ success: false });
   }
 });
-// this 
-// Set current user
-    socket.emit("set-user", username);
 
-    // Determine friend
-    const otherUser = username === "gini" ? "dev" : "gini";
-
-    // Show last seen or online
-    function updateLastSeen() {
-      fetch(`${BACKEND_URL}/last-seen/${otherUser}`)
-        .then(res => res.json())
-        .then(data => {
-          const statusText = data.lastSeen === "online"
-            ? "Online"
-            : `Last seen at ${new Date(data.lastSeen).toLocaleTimeString()}`;
-          document.getElementById("status").innerText = `${otherUser}: ${statusText}`;
-        });
-    }
-
-    setInterval(updateLastSeen, 10000);
-    updateLastSeen();
-// th
 
 app.get('/messages', (req, res) => {
   res.send(messages);
